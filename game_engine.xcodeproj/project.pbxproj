@@ -102,6 +102,7 @@
 		4898FF462D973EE9003DACA9 /* SDL2_mixer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4898FF442D973EE9003DACA9 /* SDL2_mixer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4898FF482D973EF1003DACA9 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4898FF472D973EF1003DACA9 /* SDL2_ttf.framework */; };
 		4898FF492D973EF2003DACA9 /* SDL2_ttf.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4898FF472D973EF1003DACA9 /* SDL2_ttf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4898FF4C2D9742F2003DACA9 /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4898FF4B2D9742F2003DACA9 /* ParticleSystem.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -334,6 +335,8 @@
 		4898FF412D973EDE003DACA9 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = SDL_image/lib/SDL2_image.framework; sourceTree = "<group>"; };
 		4898FF442D973EE9003DACA9 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = SDL_mixer/lib/SDL2_mixer.framework; sourceTree = "<group>"; };
 		4898FF472D973EF1003DACA9 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = SDL_ttf/lib/SDL2_ttf.framework; sourceTree = "<group>"; };
+		4898FF4A2D9742F2003DACA9 /* ParticleSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ParticleSystem.hpp; sourceTree = "<group>"; };
+		4898FF4B2D9742F2003DACA9 /* ParticleSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystem.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,6 +377,8 @@
 				4898FEE22D973EBA003DACA9 /* Rigidbody.cpp */,
 				4898FEE32D973EBA003DACA9 /* Scene.hpp */,
 				4898FEE42D973EBA003DACA9 /* Scene.cpp */,
+				4898FF4A2D9742F2003DACA9 /* ParticleSystem.hpp */,
+				4898FF4B2D9742F2003DACA9 /* ParticleSystem.cpp */,
 				4898FE7B2D973EBA003DACA9 /* box2d */,
 				4898FEC22D973EBA003DACA9 /* lua */,
 				4898FEDD2D973EBA003DACA9 /* LuaBridge */,
@@ -713,6 +718,7 @@
 				4898FEE62D973EBA003DACA9 /* b2_time_of_impact.cpp in Sources */,
 				4898FEE72D973EBA003DACA9 /* b2_fixture.cpp in Sources */,
 				4898FEE82D973EBA003DACA9 /* ltm.c in Sources */,
+				4898FF4C2D9742F2003DACA9 /* ParticleSystem.cpp in Sources */,
 				4898FEE92D973EBA003DACA9 /* lbaselib.c in Sources */,
 				4898FEEA2D973EBA003DACA9 /* b2_contact_manager.cpp in Sources */,
 				4898FEEB2D973EBA003DACA9 /* b2_wheel_joint.cpp in Sources */,
