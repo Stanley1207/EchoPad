@@ -948,6 +948,15 @@
 					"$(PROJECT_DIR)/SDL_image",
 					"$(PROJECT_DIR)/SDL",
 				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/LuaBridge/",
+					"$(PROJECT_DIR)/lua/",
+					"$(PROJECT_DIR)/SDL_mixer/lib/",
+					"$(PROJECT_DIR)/SDL_ttf/lib/",
+					"$(PROJECT_DIR)/SDL/lib/",
+					"$(PROJECT_DIR)/SDL_image/lib/",
+					"$(PROJECT_DIR)/box2d/",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -976,6 +985,15 @@
 					"$(PROJECT_DIR)/SDL_ttf",
 					"$(PROJECT_DIR)/SDL_image",
 					"$(PROJECT_DIR)/SDL",
+				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/LuaBridge/",
+					"$(PROJECT_DIR)/lua/",
+					"$(PROJECT_DIR)/SDL_mixer/lib/",
+					"$(PROJECT_DIR)/SDL_ttf/lib/",
+					"$(PROJECT_DIR)/SDL/lib/",
+					"$(PROJECT_DIR)/SDL_image/lib/",
+					"$(PROJECT_DIR)/box2d/",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
