@@ -23,7 +23,7 @@
  /* https://bit.ly/3OClfHc */
 
 #include "SDL_image/SDL_image.h"
-#include "SDL2/SDL.h"
+#include "SDL/SDL.h"
 
 enum InputStatus { NOT_INITIALIZED, INPUT_FILE_MISSING, INPUT_FILE_PRESENT };
 enum RenderLoggerStatus { RL_NOT_INITIALIZED, RL_NOT_ENABLED, RL_ENABLED };

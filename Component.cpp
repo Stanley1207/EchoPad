@@ -222,6 +222,29 @@ void Component::initializeFunctions(){
         .endClass();
     
     
+    luabridge::getGlobalNamespace(lua_state)
+        .beginClass<ParticleSystem>("ParticleSystem")
+        .addConstructor<void(*) (void)>()
+        .addData("x", &ParticleSystem::x)
+        .addData("y", &ParticleSystem::y)
+        .addData("enabled", &ParticleSystem::enabled)
+        .addData("key", &ParticleSystem::key)
+        .addData("type", &ParticleSystem::type)
+        .addData("frames_between_bursts", &ParticleSystem::frames_between_bursts)
+        .addData("burst_quantity", &ParticleSystem::burst_quantity)
+        .addData("emit_radius_min", &ParticleSystem::emit_radius_min)
+        .addData("emit_radius_max", &ParticleSystem::emit_radius_max)
+        .addData("emit_angle_min", &ParticleSystem::emit_angle_min)
+        .addData("emit_angle_max", &ParticleSystem::emit_angle_max)
+        .addData("image", &ParticleSystem::image)
+        .addData("sorting_order", &ParticleSystem::sorting_order)
+        .addData("actor", &ParticleSystem::actor)
+        .addData("onStart_called", &ParticleSystem::onStart_called)
+        .addFunction("Stop", &ParticleSystem::Stop)
+        .addFunction("Play", &ParticleSystem::Play)
+        .addFunction("Burst", &ParticleSystem::Burst)
+        .endClass();
+        
     
 }
 
@@ -282,15 +305,6 @@ std::shared_ptr<luabridge::LuaRef> Component::applyComponent(const std::string& 
         componentRef["type"] = type;
         componentRef["enabled"] = true;
         componentRef["onStart_called"] = false;
-        
-        // Add functions for Test Suite #3
-        componentRef["Stop"] = [particleSystem]() { particleSystem->enabled = false; };
-        componentRef["Play"] = [particleSystem]() { particleSystem->enabled = true; };
-        componentRef["Burst"] = [particleSystem]() {
-            for (int i = 0; i < particleSystem->burst_quantity; i++) {
-                particleSystem->EmitParticle();
-            }
-        };
         
         return make_shared<luabridge::LuaRef>(componentRef);
     }

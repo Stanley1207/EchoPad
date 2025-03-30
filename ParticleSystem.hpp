@@ -68,6 +68,14 @@ public:
     // Helper methods for particle management
     int AllocateParticle();
     void RenderParticles();
+    
+    void Stop() { enabled = false; }
+    void Play() { enabled = true; }
+    void Burst() {
+        for (int i = 0; i < burst_quantity; i++) {
+            EmitParticle();
+        }
+    }
 };
 
 #endif /* ParticleSystem_hpp */
