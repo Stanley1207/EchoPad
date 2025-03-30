@@ -274,6 +274,25 @@ std::shared_ptr<luabridge::LuaRef> Component::applyComponent(const std::string& 
         componentRef["enabled"] = true;
         componentRef["onStart_called"] = false;
         return make_shared<luabridge::LuaRef>(componentRef);
+    }else if(type == "ParticleSystem"){
+        ParticleSystem* particleSystem = new ParticleSystem();
+        luabridge::LuaRef componentRef(lua_state, particleSystem);
+
+        componentRef["key"] = key;
+        componentRef["type"] = type;
+        componentRef["enabled"] = true;
+        componentRef["onStart_called"] = false;
+        
+        // Add functions for Test Suite #3
+        componentRef["Stop"] = [particleSystem]() { particleSystem->enabled = false; };
+        componentRef["Play"] = [particleSystem]() { particleSystem->enabled = true; };
+        componentRef["Burst"] = [particleSystem]() {
+            for (int i = 0; i < particleSystem->burst_quantity; i++) {
+                particleSystem->EmitParticle();
+            }
+        };
+        
+        return make_shared<luabridge::LuaRef>(componentRef);
     }
     
     if(component_tables.find(type) == component_tables.end()){
@@ -334,6 +353,10 @@ void Component::callOnStart(const std::shared_ptr<luabridge::LuaRef>& component,
         Rigidbody* rb = (*component).cast<Rigidbody*>();
         rb->OnStart();
         return;
+    }else if ((*component).isInstance<ParticleSystem>()) {
+        ParticleSystem* ps = (*component).cast<ParticleSystem*>();
+        ps->OnStart();
+        return;
     }
     
     luabridge::LuaRef onStart = (*component)["OnStart"];
@@ -351,6 +374,12 @@ void Component::callOnStart(const std::shared_ptr<luabridge::LuaRef>& component,
 void Component::callOnUpdate(const std::shared_ptr<luabridge::LuaRef>& component, const string name) {
     luabridge::LuaRef enabled = (*component)["enabled"];
     if(!enabled.isBool() || !enabled.cast<bool>()){
+        return;
+    }
+    
+    if ((*component).isInstance<ParticleSystem>()) {
+        ParticleSystem* ps = (*component).cast<ParticleSystem*>();
+        ps->OnUpdate();
         return;
     }
     
@@ -386,6 +415,10 @@ void Component::callOnDestroy(const std::shared_ptr<luabridge::LuaRef>& componen
     if ((*component).isInstance<Rigidbody>()) {
         Rigidbody* rb = (*component).cast<Rigidbody*>();
         rb->OnDestroy();
+        return;
+    }else if ((*component).isInstance<ParticleSystem>()) {
+        ParticleSystem* ps = (*component).cast<ParticleSystem*>();
+        ps->OnDestroy();
         return;
     }
     
@@ -432,7 +465,27 @@ std::shared_ptr<luabridge::LuaRef> Component::cloneComponent(const std::shared_p
         newRb->trigger_radius = rb->trigger_radius;
         
         return newComponent;
+    }else if ((*original).isInstance<ParticleSystem>()) {
+        // Handle ParticleSystem cloning
+        auto ps = (*original).cast<ParticleSystem*>();
+        auto newComponent = applyComponent("ParticleSystem", key);
+        
+        // Copy all properties
+        ParticleSystem* newPs = (*newComponent).cast<ParticleSystem*>();
+        newPs->x = ps->x;
+        newPs->y = ps->y;
+        newPs->frames_between_bursts = ps->frames_between_bursts;
+        newPs->burst_quantity = ps->burst_quantity;
+        newPs->emit_radius_min = ps->emit_radius_min;
+        newPs->emit_radius_max = ps->emit_radius_max;
+        newPs->emit_angle_min = ps->emit_angle_min;
+        newPs->emit_angle_max = ps->emit_angle_max;
+        newPs->image = ps->image;
+        newPs->sorting_order = ps->sorting_order;
+        
+        return newComponent;
     }
+
     
     // For Lua components, use the existing metatable approach
     string type = "OutputMessage";

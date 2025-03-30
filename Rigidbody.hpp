@@ -27,6 +27,7 @@
 #include "Input.hpp"
 #include "box2d/box2d.h"
 #include "EventBus.hpp"
+#include "ParticleSystem.hpp"
 
 class Actor;
 
