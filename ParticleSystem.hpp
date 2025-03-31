@@ -12,8 +12,8 @@ struct Particle {
     float y = 0.0f;
     bool is_active = true;
     float size = 1.0f;
-    b2Body* body = nullptr;
     SDL_Color color = {255, 255, 255, 255};
+    
 };
 
 class ParticleSystem {
@@ -49,15 +49,17 @@ public:
     RandomEngine emit_angle_distribution = RandomEngine(emit_angle_min, emit_angle_max, 298);
     RandomEngine emit_radius_distribution = RandomEngine(emit_radius_min, emit_radius_max, 404);
     
+    std::queue<Particle*> particles;
     
-    
+    int local_frame_number = 0;
+
     void OnStart();
     void OnUpdate();
     void OnDestroy();
 
 private:
     void decideStartPos();
-    void createDefaultParticle();
+    void emitParticle();
     
 };
 
