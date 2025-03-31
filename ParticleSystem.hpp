@@ -17,7 +17,7 @@ struct Particle {
     float size = 1.0f;
     float initial_scale = 1.0f;
     float scale = 1.0f;
-    int rotation = 0;
+    float rotation = 0.0f;
     float rotation_speed = 0.0f;
     SDL_Color initial_color = {255, 255, 255, 255};
     SDL_Color color = {255, 255, 255, 255};

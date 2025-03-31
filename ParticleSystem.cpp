@@ -144,7 +144,7 @@ void ParticleSystem::OnUpdate() {
     }
     
     particles = tempQueue;
-    
+
     local_frame_number++;
 }
 
