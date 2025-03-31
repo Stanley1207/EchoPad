@@ -60,18 +60,14 @@ void ParticleSystem::decideStartPosVel(){
 
 void ParticleSystem::emitParticle() {
     decideStartPosVel();
-    int particle_index;
+    int particle_index = 0;
     
     if (!inactive_particles.empty()) {
-        // Reuse an existing particle slot
         particle_index = inactive_particles.front();
         inactive_particles.pop();
         
-        // Reset the particle at this index
         particles[particle_index].is_active = true;
-        particles[particle_index].frame_age = 0;
     } else {
-        // Create a new particle at the end
         particle_index = static_cast<int>(particles.size());
         particles.push_back(Particle());
     }
@@ -116,6 +112,10 @@ void ParticleSystem::OnUpdate() {
     for(int i = 0; i < particles.size(); i++) {
         Particle& particle = particles[i];
         
+        if(!particle.is_active){
+            continue;
+        }
+        
         if (particle.frame_age >= duration_frames) {
             particles[i].is_active = false;
             inactive_particles.push(i);
@@ -153,11 +153,8 @@ void ParticleSystem::OnUpdate() {
         Renderer::DrawEx(image, particle.x, particle.y, particle.rotation, particle.scale, particle.scale, pivot_x, pivot_y, particle.color.r, particle.color.g, particle.color.b, particle.color.a, sorting_order);
         
         particle.frame_age++;
-//        tempQueue.push(particle);
     }
     
-//    particles = tempQueue;
-
     local_frame_number++;
 }
 

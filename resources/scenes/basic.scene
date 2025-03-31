@@ -5,16 +5,12 @@
             "components": {
                 "basic_particles": {
                     "type": "ParticleSystem",
-                    "frames_between_bursts": 1,
-                    "burst_quantity": 10,
-                    "duration_frames": 30,
+                    "frames_between_bursts": 10,
+                    "duration_frames": 120,
                     "emit_radius_max": 1.5,
                     "start_scale_min": 4.0,
                     "start_scale_max": 4.0,
-                    "end_color_r": 255,
-                    "end_color_g": 0,
-                    "end_color_b": 0,
-                    "end_color_a": 255
+                    "end_scale": 0.0
                 }
             }
         }
