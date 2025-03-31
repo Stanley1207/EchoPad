@@ -24,7 +24,7 @@ void ParticleSystem::decideStartPos(){
 
 
 void ParticleSystem::emitParticle() {
-//    decideStartPos();
+    decideStartPos();
     
     Particle* newParticle = new Particle();
     newParticle->x = starting_x_pos;
