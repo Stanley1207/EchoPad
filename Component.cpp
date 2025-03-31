@@ -262,6 +262,10 @@ void Component::initializeFunctions(){
         .addData("drag_factor", &ParticleSystem::drag_factor)
         .addData("angular_drag_factor", &ParticleSystem::angular_drag_factor)
         .addData("end_scale", &ParticleSystem::end_scale)
+        .addData("end_color_r", &ParticleSystem::end_color_r)
+        .addData("end_color_g", &ParticleSystem::end_color_g)
+        .addData("end_color_b", &ParticleSystem::end_color_b)
+        .addData("end_color_a", &ParticleSystem::end_color_a)
 //        .addFunction("Stop", &ParticleSystem::Stop)
 //        .addFunction("Play", &ParticleSystem::Play)
 //        .addFunction("Burst", &ParticleSystem::Burst)
@@ -355,17 +359,6 @@ void Component::applyOverrides(const std::shared_ptr<luabridge::LuaRef>& compone
         std::string propName = it->name.GetString();
         
         if (propName == "type") continue;
-        
-        if ((*component)["type"].cast<std::string>() == "ParticleSystem") {
-            if (propName == "end_scale") {
-                (*component)["has_end_scale"] = true;
-            }
-            
-            if (propName == "end_color_r" || propName == "end_color_g" ||
-                propName == "end_color_b" || propName == "end_color_a") {
-                (*component)["has_end_color"] = true;
-            }
-        }
         
         if (it->value.IsString()) {
             (*component)[propName] = it->value.GetString();
@@ -550,6 +543,10 @@ std::shared_ptr<luabridge::LuaRef> Component::cloneComponent(const std::shared_p
         newPs->drag_factor = ps->drag_factor;
         newPs->angular_drag_factor = ps->angular_drag_factor;
         newPs->end_scale = ps->end_scale;
+        newPs->end_color_r = ps->end_color_r;
+        newPs->end_color_g = ps->end_color_g;
+        newPs->end_color_b = ps->end_color_b;
+        newPs->end_color_a = ps->end_color_a;
         
         return newComponent;
     }

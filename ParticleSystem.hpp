@@ -82,7 +82,7 @@ public:
     float drag_factor = 1.0f;
     float angular_drag_factor = 1.0f;
     
-    float end_scale = 0.0f;
+    float end_scale = 1.0f;
     bool has_end_scale = false;
 
     int end_color_r = 255;

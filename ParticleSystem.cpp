@@ -30,6 +30,15 @@ void ParticleSystem::OnStart(){
     speed_distribution = RandomEngine(start_speed_min, start_speed_max, 498);
     rotation_speed_distribution = RandomEngine(rotation_speed_min, rotation_speed_max, 305);
     
+    
+    if(end_scale != 1.0f){
+        has_end_scale = true;
+    }
+    
+    if(end_color_r != 255 || end_color_g != 255 || end_color_b != 255 || end_color_a != 255){
+        has_end_color = true;
+    }
+    
 }
 
 
