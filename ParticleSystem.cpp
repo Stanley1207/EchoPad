@@ -94,7 +94,7 @@ void ParticleSystem::OnUpdate() {
         image = key;
     }
     
-    if(local_frame_number % frames_between_bursts == 0){
+    if(is_playing && local_frame_number % frames_between_bursts == 0){
         for (int i = 0; i < burst_quantity; i++) {
             emitParticle();
         }

@@ -266,9 +266,9 @@ void Component::initializeFunctions(){
         .addData("end_color_g", &ParticleSystem::end_color_g)
         .addData("end_color_b", &ParticleSystem::end_color_b)
         .addData("end_color_a", &ParticleSystem::end_color_a)
-//        .addFunction("Stop", &ParticleSystem::Stop)
-//        .addFunction("Play", &ParticleSystem::Play)
-//        .addFunction("Burst", &ParticleSystem::Burst)
+        .addFunction("Stop", &ParticleSystem::Stop)
+        .addFunction("Play", &ParticleSystem::Play)
+        .addFunction("Burst", &ParticleSystem::Burst)
         .endClass();
         
     

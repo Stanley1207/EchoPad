@@ -110,6 +110,16 @@ public:
     void OnStart();
     void OnUpdate();
     void OnDestroy();
+    
+    bool is_playing = true;
+    
+    void Play() {is_playing = true;}
+    void Stop() {is_playing = false;}
+    void Burst(){
+        for (int i = 0; i < burst_quantity; i++) {
+            emitParticle();
+        }
+    }
 
 private:
     void decideStartPosVel();
