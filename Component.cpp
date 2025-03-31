@@ -252,7 +252,16 @@ void Component::initializeFunctions(){
         .addData("emit_radius_max", &ParticleSystem::emit_radius_max)
         .addData("emit_angle_min", &ParticleSystem::emit_angle_min)
         .addData("emit_angle_max", &ParticleSystem::emit_angle_max)
-
+        .addData("duration_frames", &ParticleSystem::duration_frames)
+        .addData("start_speed_min", &ParticleSystem::start_speed_min)
+        .addData("start_speed_max", &ParticleSystem::start_speed_max)
+        .addData("rotation_speed_min", &ParticleSystem::rotation_speed_min)
+        .addData("rotation_speed_max", &ParticleSystem::rotation_speed_max)
+        .addData("gravity_scale_x", &ParticleSystem::gravity_scale_x)
+        .addData("gravity_scale_y", &ParticleSystem::gravity_scale_y)
+        .addData("drag_factor", &ParticleSystem::drag_factor)
+        .addData("angular_drag_factor", &ParticleSystem::angular_drag_factor)
+        .addData("end_scale", &ParticleSystem::end_scale)
 //        .addFunction("Stop", &ParticleSystem::Stop)
 //        .addFunction("Play", &ParticleSystem::Play)
 //        .addFunction("Burst", &ParticleSystem::Burst)
@@ -346,6 +355,17 @@ void Component::applyOverrides(const std::shared_ptr<luabridge::LuaRef>& compone
         std::string propName = it->name.GetString();
         
         if (propName == "type") continue;
+        
+        if ((*component)["type"].cast<std::string>() == "ParticleSystem") {
+            if (propName == "end_scale") {
+                (*component)["has_end_scale"] = true;
+            }
+            
+            if (propName == "end_color_r" || propName == "end_color_g" ||
+                propName == "end_color_b" || propName == "end_color_a") {
+                (*component)["has_end_color"] = true;
+            }
+        }
         
         if (it->value.IsString()) {
             (*component)[propName] = it->value.GetString();
@@ -520,6 +540,16 @@ std::shared_ptr<luabridge::LuaRef> Component::cloneComponent(const std::shared_p
         newPs->emit_angle_min = ps->emit_angle_min;
         newPs->emit_radius_max = ps->emit_radius_max;
         newPs->emit_radius_min = ps->emit_radius_min;
+        newPs->duration_frames = ps->duration_frames;
+        newPs->start_speed_min = ps->start_speed_min;
+        newPs->start_speed_max = ps->start_speed_max;
+        newPs->rotation_speed_min = ps->rotation_speed_min;
+        newPs->rotation_speed_max = ps->rotation_speed_max;
+        newPs->gravity_scale_x = ps->gravity_scale_x;
+        newPs->gravity_scale_y = ps->gravity_scale_y;
+        newPs->drag_factor = ps->drag_factor;
+        newPs->angular_drag_factor = ps->angular_drag_factor;
+        newPs->end_scale = ps->end_scale;
         
         return newComponent;
     }
