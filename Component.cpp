@@ -230,8 +230,8 @@ void Component::initializeFunctions(){
         .addData("enabled", &ParticleSystem::enabled)
         .addData("key", &ParticleSystem::key)
         .addData("type", &ParticleSystem::type)
-//        .addData("frames_between_bursts", &ParticleSystem::frames_between_bursts)
-//        .addData("burst_quantity", &ParticleSystem::burst_quantity)
+        .addData("frames_between_bursts", &ParticleSystem::frames_between_bursts)
+        .addData("burst_quantity", &ParticleSystem::burst_quantity)
         .addData("emit_radius_min", &ParticleSystem::emit_radius_min)
         .addData("emit_radius_max", &ParticleSystem::emit_radius_max)
         .addData("emit_angle_min", &ParticleSystem::emit_angle_min)
@@ -240,6 +240,19 @@ void Component::initializeFunctions(){
         .addData("sorting_order", &ParticleSystem::sorting_order)
         .addData("actor", &ParticleSystem::actor)
         .addData("onStart_called", &ParticleSystem::onStart_called)
+        .addData("start_scale_min", &ParticleSystem::start_scale_min)
+        .addData("start_scale_max", &ParticleSystem::start_scale_max)
+        .addData("rotation_min", &ParticleSystem::rotation_min)
+        .addData("rotation_max", &ParticleSystem::rotation_max)
+        .addData("start_color_r", &ParticleSystem::start_color_r)
+        .addData("start_color_g", &ParticleSystem::start_color_g)
+        .addData("start_color_b", &ParticleSystem::start_color_b)
+        .addData("start_color_a", &ParticleSystem::start_color_a)
+        .addData("emit_radius_min", &ParticleSystem::emit_radius_min)
+        .addData("emit_radius_max", &ParticleSystem::emit_radius_max)
+        .addData("emit_angle_min", &ParticleSystem::emit_angle_min)
+        .addData("emit_angle_max", &ParticleSystem::emit_angle_max)
+
 //        .addFunction("Stop", &ParticleSystem::Stop)
 //        .addFunction("Play", &ParticleSystem::Play)
 //        .addFunction("Burst", &ParticleSystem::Burst)
@@ -487,14 +500,26 @@ std::shared_ptr<luabridge::LuaRef> Component::cloneComponent(const std::shared_p
         ParticleSystem* newPs = (*newComponent).cast<ParticleSystem*>();
         newPs->x = ps->x;
         newPs->y = ps->y;
-//        newPs->frames_between_bursts = ps->frames_between_bursts;
-//        newPs->burst_quantity = ps->burst_quantity;
+        newPs->frames_between_bursts = ps->frames_between_bursts;
+        newPs->burst_quantity = ps->burst_quantity;
         newPs->emit_radius_min = ps->emit_radius_min;
         newPs->emit_radius_max = ps->emit_radius_max;
         newPs->emit_angle_min = ps->emit_angle_min;
         newPs->emit_angle_max = ps->emit_angle_max;
         newPs->image = ps->image;
         newPs->sorting_order = ps->sorting_order;
+        newPs->start_scale_min = ps->start_scale_min;
+        newPs->start_scale_max = ps->start_scale_max;
+        newPs->rotation_min = ps->rotation_min;
+        newPs->rotation_max = ps->rotation_max;
+        newPs->start_color_r = ps->start_color_r;
+        newPs->start_color_g = ps->start_color_g;
+        newPs->start_color_b = ps->start_color_b;
+        newPs->start_color_a = ps->start_color_a;
+        newPs->emit_angle_max = ps->emit_angle_max;
+        newPs->emit_angle_min = ps->emit_angle_min;
+        newPs->emit_radius_max = ps->emit_radius_max;
+        newPs->emit_radius_min = ps->emit_radius_min;
         
         return newComponent;
     }

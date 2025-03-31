@@ -4,7 +4,8 @@
             "name": "Particles",
             "components": {
                 "1": {
-                    "type": "ParticleSystem"
+                    "type": "ParticleSystem",
+                    "frames_between_bursts": 60
                 }
             }
         }

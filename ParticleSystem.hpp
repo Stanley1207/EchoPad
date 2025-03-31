@@ -12,6 +12,8 @@ struct Particle {
     float y = 0.0f;
     bool is_active = true;
     float size = 1.0f;
+    float scale = 1.0f;
+    int rotation = 0;
     SDL_Color color = {255, 255, 255, 255};
     
 };
@@ -46,8 +48,26 @@ public:
     float emit_radius_min = 0.0f;
     float emit_radius_max = 0.5f;
     
-    RandomEngine emit_angle_distribution = RandomEngine(emit_angle_min, emit_angle_max, 298);
-    RandomEngine emit_radius_distribution = RandomEngine(emit_radius_min, emit_radius_max, 404);
+    int frames_between_bursts = 1;
+    int burst_quantity = 1;
+    
+    float start_scale_min = 1.0f;
+    float start_scale_max = 1.0f;
+    
+    float rotation_min = 0.0f;
+    float rotation_max = 0.0f;
+    
+    int start_color_r = 255;
+    int start_color_g = 255;
+    int start_color_b = 255;
+    int start_color_a = 255;
+    
+    
+    RandomEngine emit_angle_distribution;
+    RandomEngine emit_radius_distribution;
+    
+    RandomEngine rotation_distribution;
+    RandomEngine scale_distribution;
     
     std::queue<Particle*> particles;
     
