@@ -109,8 +109,12 @@ void ParticleSystem::OnUpdate() {
         particle->velocity_x *= drag_factor;
         particle->velocity_y *= drag_factor;
         
-        particle->rotation += particle->rotation_speed;
         particle->rotation_speed *= angular_drag_factor;
+        
+        particle->x += particle->velocity_x;
+        particle->y += particle->velocity_y;
+        
+        particle->rotation += particle->rotation_speed;
         
         if(has_end_scale){
             particle->scale = glm::mix(particle->initial_scale, end_scale, lifetime_progress);

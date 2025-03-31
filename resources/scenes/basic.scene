@@ -4,7 +4,9 @@
             "name": "Particles",
             "components": {
                 "basic_particles": {
-                    "type": "ParticleSystem"
+                    "type": "ParticleSystem",
+                    "start_speed_min": 0.01,
+                    "start_speed_max": 0.2
                 }
             }
         }
