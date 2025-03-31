@@ -125,6 +125,9 @@ private:
     void decideStartPosVel();
     void emitParticle();
     
+    std::queue<Particle*> inactive_particles;
+
+
 };
 
 #endif /* ParticleSystem_hpp */

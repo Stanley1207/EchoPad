@@ -62,8 +62,26 @@ void ParticleSystem::emitParticle() {
     decideStartPosVel();
     
     Particle* newParticle = new Particle();
-    newParticle->x = starting_x_pos;
-    newParticle->y = starting_y_pos;
+    
+    if (!inactive_particles.empty()) {
+        // Reuse an existing particle
+        newParticle = inactive_particles.front();
+        inactive_particles.pop();
+        
+        // Reset particle properties
+        newParticle->x = starting_x_pos;
+        newParticle->y = starting_y_pos;
+        newParticle->is_active = true;
+    } else {
+        // Create a new particle
+        newParticle = new Particle();
+        newParticle->x = starting_x_pos;
+        newParticle->y = starting_y_pos;
+    }
+    
+//    
+//    newParticle->x = starting_x_pos;
+//    newParticle->y = starting_y_pos;
     
     newParticle->initial_scale = scale_distribution.Sample();
     newParticle->scale = newParticle->initial_scale;
@@ -106,7 +124,8 @@ void ParticleSystem::OnUpdate() {
         particles.pop();
         
         if (particle->frame_age >= duration_frames) {
-            delete particle;
+            particle->is_active = false;
+            inactive_particles.push(particle);
             continue;
         }
         
@@ -152,6 +171,12 @@ void ParticleSystem::OnDestroy(){
     while (!particles.empty()) {
         Particle* particle = particles.front();
         particles.pop();
+        delete particle;
+    }
+    
+    while (!inactive_particles.empty()) {
+        Particle* particle = inactive_particles.front();
+        inactive_particles.pop();
         delete particle;
     }
 }
