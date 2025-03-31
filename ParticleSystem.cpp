@@ -6,10 +6,6 @@
 using namespace std;
 
 void ParticleSystem::OnStart(){
-    if (image == "") {
-        ImageDB::CreateDefaultParticletextureWithName(key);
-        image = key;
-    }
     
     local_frame_number = 0;
 }
@@ -28,7 +24,7 @@ void ParticleSystem::decideStartPos(){
 
 
 void ParticleSystem::emitParticle() {
-    decideStartPos();
+//    decideStartPos();
     
     Particle* newParticle = new Particle();
     newParticle->x = starting_x_pos;
@@ -40,6 +36,11 @@ void ParticleSystem::emitParticle() {
 
 void ParticleSystem::OnUpdate() {
     if (!enabled) return;
+    
+    if (local_frame_number == 0 && image == "") {
+        ImageDB::CreateDefaultParticletextureWithName(key);
+        image = key;
+    }
     
     emitParticle();
     
