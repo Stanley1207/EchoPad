@@ -19,6 +19,8 @@ public:
     static SDL_Texture* loadImageTexture(SDL_Renderer* renderer, const std::string& image_name);
     static void clearCache();
     
+    static void CreateDefaultParticletextureWithName(const std::string& name);
+    
 private:
     static inline std::unordered_map<std::string, SDL_Texture*> imageCache;
 };
@@ -145,6 +147,8 @@ public:
     static void SetZoom(float zoomFactor);
     
     static float GetZoom();
+    
+    static SDL_Renderer* getRenderer(){return renderer;}
         
 private:
     static inline std::queue<TextRendereRequest> textToDraw;

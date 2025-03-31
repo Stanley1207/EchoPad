@@ -5,77 +5,60 @@
 #include "Component.hpp"
 #include "Helper.h"
 
-// Forward declarations
 class Actor;
 
-// Structure to represent a single particle
 struct Particle {
-    float x;
-    float y;
-    bool is_active;
-    // More properties will be added in later test suites
+    float x = 0.0f;
+    float y = 0.0f;
+    bool is_active = true;
+    float size = 1.0f;
+    b2Body* body = nullptr;
+    SDL_Color color = {255, 255, 255, 255};
 };
 
 class ParticleSystem {
 public:
-    bool enabled = true;
-    std::string key = "???";
-    
-    Actor* actor = nullptr;
-    std::string type = "ParticleSystem";
-    
-    bool onStart_called = false;
-    
-    // Default property values as specified in Test Suite #0
     float x = 0.0f;
     float y = 0.0f;
+    bool enabled = true;
+    std::string key = "???";
+    Actor* actor = nullptr;
+    std::string type = "ParticleSystem";
+    bool onStart_called = false;
     
-    // Particle generation properties
-    int frames_between_bursts = 1;
-    int burst_quantity = 1;
-    int local_frame_number = 0;
+    std::string image = "";
     
-    // Emission shape properties
-    float emit_radius_min = 0.0f;
-    float emit_radius_max = 0.5f;
+    float pivot_x = 0.5f;
+    float pivot_y = 0.5f;
+    
+    int sorting_order = 9999;
+    float scale = 1.0f;
+    
+    SDL_Color tint = {255, 255, 255, 255};
+    
+    float radius = 0.5f;
+    float starting_x_pos = 0.0f;
+    float starting_y_pos = 0.0f;
+
+    
     float emit_angle_min = 0.0f;
     float emit_angle_max = 360.0f;
+    float emit_radius_min = 0.0f;
+    float emit_radius_max = 0.5f;
     
-    // Appearance properties
-    std::string image = "";
-    int sorting_order = 9999;
+    RandomEngine emit_angle_distribution = RandomEngine(emit_angle_min, emit_angle_max, 298);
+    RandomEngine emit_radius_distribution = RandomEngine(emit_radius_min, emit_radius_max, 404);
     
-    // Internal state
-    SDL_Texture* default_texture = nullptr;
-    std::vector<Particle> particles;
-    std::queue<int> free_particle_indices;
     
-    // Random engines for particle generation
-    RandomEngine angle_random;
-    RandomEngine radius_random;
     
-    // Methods
     void OnStart();
     void OnUpdate();
     void OnDestroy();
+
+private:
+    void decideStartPos();
+    void createDefaultParticle();
     
-    // Create a default particle texture
-    void CreateDefaultTexture();
-    
-    // Emit a new particle
-    void EmitParticle();
-    
-    // Helper methods for particle management
-    int AllocateParticle();
-    void RenderParticles();
-    
-    void Stop() { enabled = false; }
-    void Play() { enabled = true; }
-    void Burst() {
-        for (int i = 0; i < burst_quantity; i++) {
-            EmitParticle();
-        }
-    }
 };
 
 #endif /* ParticleSystem_hpp */

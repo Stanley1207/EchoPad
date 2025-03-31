@@ -56,6 +56,22 @@ void ImageDB::clearCache(){
 }
 
 
+void ImageDB::CreateDefaultParticletextureWithName(const std::string &name){
+    if(imageCache.find(name) != imageCache.end()){return;}
+    
+    SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(0, 8, 8, 32, SDL_PIXELFORMAT_RGBA8888);
+    
+    Uint32 whit_color = SDL_MapRGBA(surface->format, 255, 255, 255, 255);
+    SDL_FillRect(surface, NULL, whit_color);
+    
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer::getRenderer(), surface);
+    
+    SDL_FreeSurface(surface);
+    imageCache[name] = texture;
+}
+
+
+
 TTF_Font* FontDB::loadFontTexture(SDL_Renderer *renderer, const string &font_name, int font_size) {
     if (fontCache.find(font_name) != fontCache.end()) {
         if (fontCache[font_name].find(font_size) != fontCache[font_name].end()) {

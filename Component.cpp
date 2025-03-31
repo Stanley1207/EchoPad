@@ -230,8 +230,8 @@ void Component::initializeFunctions(){
         .addData("enabled", &ParticleSystem::enabled)
         .addData("key", &ParticleSystem::key)
         .addData("type", &ParticleSystem::type)
-        .addData("frames_between_bursts", &ParticleSystem::frames_between_bursts)
-        .addData("burst_quantity", &ParticleSystem::burst_quantity)
+//        .addData("frames_between_bursts", &ParticleSystem::frames_between_bursts)
+//        .addData("burst_quantity", &ParticleSystem::burst_quantity)
         .addData("emit_radius_min", &ParticleSystem::emit_radius_min)
         .addData("emit_radius_max", &ParticleSystem::emit_radius_max)
         .addData("emit_angle_min", &ParticleSystem::emit_angle_min)
@@ -240,9 +240,9 @@ void Component::initializeFunctions(){
         .addData("sorting_order", &ParticleSystem::sorting_order)
         .addData("actor", &ParticleSystem::actor)
         .addData("onStart_called", &ParticleSystem::onStart_called)
-        .addFunction("Stop", &ParticleSystem::Stop)
-        .addFunction("Play", &ParticleSystem::Play)
-        .addFunction("Burst", &ParticleSystem::Burst)
+//        .addFunction("Stop", &ParticleSystem::Stop)
+//        .addFunction("Play", &ParticleSystem::Play)
+//        .addFunction("Burst", &ParticleSystem::Burst)
         .endClass();
         
     
@@ -480,7 +480,6 @@ std::shared_ptr<luabridge::LuaRef> Component::cloneComponent(const std::shared_p
         
         return newComponent;
     }else if ((*original).isInstance<ParticleSystem>()) {
-        // Handle ParticleSystem cloning
         auto ps = (*original).cast<ParticleSystem*>();
         auto newComponent = applyComponent("ParticleSystem", key);
         
@@ -488,8 +487,8 @@ std::shared_ptr<luabridge::LuaRef> Component::cloneComponent(const std::shared_p
         ParticleSystem* newPs = (*newComponent).cast<ParticleSystem*>();
         newPs->x = ps->x;
         newPs->y = ps->y;
-        newPs->frames_between_bursts = ps->frames_between_bursts;
-        newPs->burst_quantity = ps->burst_quantity;
+//        newPs->frames_between_bursts = ps->frames_between_bursts;
+//        newPs->burst_quantity = ps->burst_quantity;
         newPs->emit_radius_min = ps->emit_radius_min;
         newPs->emit_radius_max = ps->emit_radius_max;
         newPs->emit_angle_min = ps->emit_angle_min;

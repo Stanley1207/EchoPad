@@ -337,6 +337,7 @@
 		4898FF472D973EF1003DACA9 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = SDL_ttf/lib/SDL2_ttf.framework; sourceTree = "<group>"; };
 		4898FF4A2D9742F2003DACA9 /* ParticleSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ParticleSystem.hpp; sourceTree = "<group>"; };
 		4898FF4B2D9742F2003DACA9 /* ParticleSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystem.cpp; sourceTree = "<group>"; };
+		4898FF4D2D9AF4C1003DACA9 /* Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,6 +380,7 @@
 				4898FEE42D973EBA003DACA9 /* Scene.cpp */,
 				4898FF4A2D9742F2003DACA9 /* ParticleSystem.hpp */,
 				4898FF4B2D9742F2003DACA9 /* ParticleSystem.cpp */,
+				4898FF4D2D9AF4C1003DACA9 /* Helper.h */,
 				4898FE7B2D973EBA003DACA9 /* box2d */,
 				4898FEC22D973EBA003DACA9 /* lua */,
 				4898FEDD2D973EBA003DACA9 /* LuaBridge */,
