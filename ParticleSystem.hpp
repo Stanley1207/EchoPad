@@ -13,7 +13,6 @@ struct Particle {
     float velocity_x = 0.0f;
     float velocity_y = 0.0f;
     int frame_age = 0;
-    bool is_active = true;
     float size = 1.0f;
     float initial_scale = 1.0f;
     float scale = 1.0f;
@@ -21,6 +20,7 @@ struct Particle {
     float rotation_speed = 0.0f;
     SDL_Color initial_color = {255, 255, 255, 255};
     SDL_Color color = {255, 255, 255, 255};
+    bool is_active = true;
     
 };
 
@@ -103,8 +103,8 @@ public:
     RandomEngine speed_distribution;
     RandomEngine rotation_speed_distribution;
     
-    std::queue<Particle*> particles;
-    
+//    std::queue<Particle*> particles;
+
     int local_frame_number = 0;
 
     void OnStart();
@@ -125,7 +125,11 @@ private:
     void decideStartPosVel();
     void emitParticle();
     
-    std::queue<Particle*> inactive_particles;
+    std::queue<int> inactive_particles;
+    std::vector<Particle> particles;
+
+    
+//    std::queue<Particle*> inactive_particles;
 
 
 };

@@ -554,7 +554,7 @@ std::shared_ptr<luabridge::LuaRef> Component::cloneComponent(const std::shared_p
     
     // For Lua components, use the existing metatable approach
     string type = "OutputMessage";
-    
+    //std::string my_type = luaref["type"].cast<string>();
     luaL_dostring(lua_state,
                  "function getComponentType(comp) "
                  "  local mt = getmetatable(comp) "

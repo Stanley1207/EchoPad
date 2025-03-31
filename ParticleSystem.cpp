@@ -60,47 +60,42 @@ void ParticleSystem::decideStartPosVel(){
 
 void ParticleSystem::emitParticle() {
     decideStartPosVel();
-    
-    Particle* newParticle = new Particle();
+    int particle_index;
     
     if (!inactive_particles.empty()) {
-        // Reuse an existing particle
-        newParticle = inactive_particles.front();
+        // Reuse an existing particle slot
+        particle_index = inactive_particles.front();
         inactive_particles.pop();
         
-        // Reset particle properties
-        newParticle->x = starting_x_pos;
-        newParticle->y = starting_y_pos;
-        newParticle->is_active = true;
+        // Reset the particle at this index
+        particles[particle_index].is_active = true;
+        particles[particle_index].frame_age = 0;
     } else {
-        // Create a new particle
-        newParticle = new Particle();
-        newParticle->x = starting_x_pos;
-        newParticle->y = starting_y_pos;
+        // Create a new particle at the end
+        particle_index = static_cast<int>(particles.size());
+        particles.push_back(Particle());
     }
-    
-//    
-//    newParticle->x = starting_x_pos;
-//    newParticle->y = starting_y_pos;
-    
-    newParticle->initial_scale = scale_distribution.Sample();
-    newParticle->scale = newParticle->initial_scale;
-    
-    newParticle->rotation = rotation_distribution.Sample();
-    
-    newParticle->color.r = start_color_r;
-    newParticle->color.g = start_color_g;
-    newParticle->color.b = start_color_b;
-    newParticle->color.a = start_color_a;
-    newParticle->initial_color = newParticle->color;
 
-    newParticle->velocity_x = starting_x_vel;
-    newParticle->velocity_y = starting_y_vel;
     
-    newParticle->rotation_speed = rotation_speed_distribution.Sample();
-    newParticle->frame_age = 0;
+    particles[particle_index].x = starting_x_pos;
+    particles[particle_index].y = starting_y_pos;
     
-    particles.push(newParticle);
+    particles[particle_index].initial_scale = scale_distribution.Sample();
+    particles[particle_index].scale = particles[particle_index].initial_scale;
+    
+    particles[particle_index].rotation = rotation_distribution.Sample();
+    
+    particles[particle_index].color.r = start_color_r;
+    particles[particle_index].color.g = start_color_g;
+    particles[particle_index].color.b = start_color_b;
+    particles[particle_index].color.a = start_color_a;
+    particles[particle_index].initial_color = particles[particle_index].color;
+
+    particles[particle_index].velocity_x = starting_x_vel;
+    particles[particle_index].velocity_y = starting_y_vel;
+    
+    particles[particle_index].rotation_speed = rotation_speed_distribution.Sample();
+    particles[particle_index].frame_age = 0;
 }
 
 
@@ -118,66 +113,57 @@ void ParticleSystem::OnUpdate() {
         }
     }
     
-    queue<Particle*> tempQueue;
-    while (!particles.empty()) {
-        Particle* particle = particles.front();
-        particles.pop();
+    for(int i = 0; i < particles.size(); i++) {
+        Particle& particle = particles[i];
         
-        if (particle->frame_age >= duration_frames) {
-            particle->is_active = false;
-            inactive_particles.push(particle);
+        if (particle.frame_age >= duration_frames) {
+            particles[i].is_active = false;
+            inactive_particles.push(i);
             continue;
         }
         
-        float lifetime_progress = static_cast<float>(particle->frame_age) / static_cast<float>(duration_frames);
         
-        particle->velocity_x += gravity_scale_x;
-        particle->velocity_y += gravity_scale_y;
+        float lifetime_progress = static_cast<float>(particle.frame_age) / static_cast<float>(duration_frames);
         
-        particle->velocity_x *= drag_factor;
-        particle->velocity_y *= drag_factor;
+        particle.velocity_x += gravity_scale_x;
+        particle.velocity_y += gravity_scale_y;
         
-        particle->rotation_speed *= angular_drag_factor;
+        particle.velocity_x *= drag_factor;
+        particle.velocity_y *= drag_factor;
         
-        particle->x += particle->velocity_x;
-        particle->y += particle->velocity_y;
+        particle.rotation_speed *= angular_drag_factor;
         
-        particle->rotation += particle->rotation_speed;
+        particle.x += particle.velocity_x;
+        particle.y += particle.velocity_y;
+        
+        particle.rotation += particle.rotation_speed;
         
         if(has_end_scale){
-            particle->scale = glm::mix(particle->initial_scale, end_scale, lifetime_progress);
+            particle.scale = glm::mix(particle.initial_scale, end_scale, lifetime_progress);
         }
         
         if(has_end_color){
-            particle->color.r = glm::mix(float(particle->initial_color.r), float(end_color_r), lifetime_progress);
-            particle->color.g = glm::mix(float(particle->initial_color.g), float(end_color_g), lifetime_progress);
-            particle->color.b = glm::mix(float(particle->initial_color.b), float(end_color_b), lifetime_progress);
-            particle->color.a = glm::mix(float(particle->initial_color.a), float(end_color_a), lifetime_progress);
+            particle.color.r = glm::mix(float(particle.initial_color.r), float(end_color_r), lifetime_progress);
+            particle.color.g = glm::mix(float(particle.initial_color.g), float(end_color_g), lifetime_progress);
+            particle.color.b = glm::mix(float(particle.initial_color.b), float(end_color_b), lifetime_progress);
+            particle.color.a = glm::mix(float(particle.initial_color.a), float(end_color_a), lifetime_progress);
 
         }
         
-        Renderer::DrawEx(image, particle->x, particle->y, particle->rotation, particle->scale, particle->scale, pivot_x, pivot_y, particle->color.r, particle->color.g, particle->color.b, particle->color.a, sorting_order);
+        Renderer::DrawEx(image, particle.x, particle.y, particle.rotation, particle.scale, particle.scale, pivot_x, pivot_y, particle.color.r, particle.color.g, particle.color.b, particle.color.a, sorting_order);
         
-        particle->frame_age++;
-        tempQueue.push(particle);
+        particle.frame_age++;
+//        tempQueue.push(particle);
     }
     
-    particles = tempQueue;
+//    particles = tempQueue;
 
     local_frame_number++;
 }
 
-void ParticleSystem::OnDestroy(){
-    while (!particles.empty()) {
-        Particle* particle = particles.front();
-        particles.pop();
-        delete particle;
-    }
+void ParticleSystem::OnDestroy() {
+    particles.clear();
     
-    while (!inactive_particles.empty()) {
-        Particle* particle = inactive_particles.front();
-        inactive_particles.pop();
-        delete particle;
-    }
+    std::queue<int> empty;
+    std::swap(inactive_particles, empty);
 }
-
