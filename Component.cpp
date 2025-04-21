@@ -270,7 +270,19 @@ void Component::initializeFunctions(){
         .addFunction("Play", &ParticleSystem::Play)
         .addFunction("Burst", &ParticleSystem::Burst)
         .endClass();
-        
+    
+    luabridge::getGlobalNamespace(lua_state)
+        .beginNamespace("Input")
+        .addFunction("GetButton", static_cast<bool(*)(int, std::string)>(&Input::GetButton))
+        .addFunction("GetButtonDown", static_cast<bool(*)(int, std::string)>(&Input::GetButtonDown))
+        .addFunction("GetButtonUp", static_cast<bool(*)(int, std::string)>(&Input::GetButtonUp))
+        .addFunction("GetAxis", static_cast<float(*)(int, std::string)>(&Input::GetAxis))
+        .addFunction("IsControllerConnected", &Input::IsControllerConnected)
+        .addFunction("GetConnectedControllerCount", &Input::GetConnectedControllerCount)
+        .addFunction("GetControllerName", &Input::GetControllerName)
+        .addFunction("SetVibration", &Input::SetVibration)
+        .addFunction("StopVibration", &Input::StopVibration)
+        .endNamespace();
     
 }
 

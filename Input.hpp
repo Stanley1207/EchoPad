@@ -14,6 +14,7 @@ public:
     static void Init();
     static void ProcessEvent(const SDL_Event & e);
     static void LateUpdate();
+    static void Shutdown();
 
     static bool GetKey(std::string keycode);
     static bool GetKeyDown(std::string keycode);
@@ -28,6 +29,25 @@ public:
     
     static void HideCursor();
     static void ShowCursor();
+    
+    // Controller input
+    static bool GetButton(int controllerIndex, std::string buttonName);
+    static bool GetButtonDown(int controllerIndex, std::string buttonName);
+    static bool GetButtonUp(int controllerIndex, std::string buttonName);
+    static float GetAxis(int controllerIndex, std::string axisName);
+    static bool IsControllerConnected(int controllerIndex);
+    static int GetConnectedControllerCount();
+    static std::string GetControllerName(int controllerIndex);
+    static bool SetVibration(int controllerIndex, float leftMotor, float rightMotor, int durationMs);
+    static void StopVibration(int controllerIndex);
+    
+    // Convenience methods for the primary controller (index 0)
+    static bool GetButton(std::string buttonName) { return GetButton(0, buttonName); }
+    static bool GetButtonDown(std::string buttonName) { return GetButtonDown(0, buttonName); }
+    static bool GetButtonUp(std::string buttonName) { return GetButtonUp(0, buttonName); }
+    static float GetAxis(std::string axisName) { return GetAxis(0, axisName); }
+    static bool IsAnyControllerConnected() { return GetConnectedControllerCount() > 0; }
+    
 
 private:
     static inline std::unordered_map<SDL_Scancode, INPUT_STATE> keyboard_states;
@@ -40,6 +60,18 @@ private:
     static inline std::vector<int> just_became_up_buttons;
     
     static inline float mouse_scroll_this_frame = 0;
+    
+    static inline std::unordered_map<int, SDL_GameController*> controllers;
+    static inline std::unordered_map<int, std::unordered_map<SDL_GameControllerButton, INPUT_STATE>> controller_button_states;
+    static inline std::unordered_map<int, std::vector<SDL_GameControllerButton>> just_became_down_controller_buttons;
+    static inline std::unordered_map<int, std::vector<SDL_GameControllerButton>> just_became_up_controller_buttons;
+    static inline std::unordered_map<int, std::unordered_map<SDL_GameControllerAxis, float>> controller_axis_values;
+    
+    // Helper function to convert string to SDL_GameControllerButton
+    static SDL_GameControllerButton StringToButton(const std::string& buttonName);
+    
+    // Helper function to convert string to SDL_GameControllerAxis
+    static SDL_GameControllerAxis StringToAxis(const std::string& axisName);
 };
 
 const std::unordered_map<std::string, SDL_Scancode> __keycode_to_scancode = {
@@ -109,5 +141,34 @@ const std::unordered_map<std::string, SDL_Scancode> __keycode_to_scancode = {
     {"'", SDL_SCANCODE_APOSTROPHE},
     {"`", SDL_SCANCODE_GRAVE}
 };
+
+
+const std::unordered_map<std::string, SDL_GameControllerButton> __buttonname_to_sdl_button = {
+    {"a", SDL_CONTROLLER_BUTTON_A},
+    {"b", SDL_CONTROLLER_BUTTON_B},
+    {"x", SDL_CONTROLLER_BUTTON_X},
+    {"y", SDL_CONTROLLER_BUTTON_Y},
+    {"back", SDL_CONTROLLER_BUTTON_BACK},
+    {"guide", SDL_CONTROLLER_BUTTON_GUIDE},
+    {"start", SDL_CONTROLLER_BUTTON_START},
+    {"leftstick", SDL_CONTROLLER_BUTTON_LEFTSTICK},
+    {"rightstick", SDL_CONTROLLER_BUTTON_RIGHTSTICK},
+    {"leftshoulder", SDL_CONTROLLER_BUTTON_LEFTSHOULDER},
+    {"rightshoulder", SDL_CONTROLLER_BUTTON_RIGHTSHOULDER},
+    {"dpad_up", SDL_CONTROLLER_BUTTON_DPAD_UP},
+    {"dpad_down", SDL_CONTROLLER_BUTTON_DPAD_DOWN},
+    {"dpad_left", SDL_CONTROLLER_BUTTON_DPAD_LEFT},
+    {"dpad_right", SDL_CONTROLLER_BUTTON_DPAD_RIGHT},
+};
+
+const std::unordered_map<std::string, SDL_GameControllerAxis> __axisname_to_sdl_axis = {
+    {"leftx", SDL_CONTROLLER_AXIS_LEFTX},
+    {"lefty", SDL_CONTROLLER_AXIS_LEFTY},
+    {"rightx", SDL_CONTROLLER_AXIS_RIGHTX},
+    {"righty", SDL_CONTROLLER_AXIS_RIGHTY},
+    {"triggerleft", SDL_CONTROLLER_AXIS_TRIGGERLEFT},
+    {"triggerright", SDL_CONTROLLER_AXIS_TRIGGERRIGHT},
+};
+
 
 #endif

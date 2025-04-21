@@ -1,18 +1,28 @@
 {
-    "actors": [
-        {
-            "name": "Particles",
-            "components": {
-                "basic_particles": {
-                    "type": "ParticleSystem",
-                    "frames_between_bursts": 10,
-                    "duration_frames": 120,
-                    "emit_radius_max": 1.5,
-                    "start_scale_min": 4.0,
-                    "start_scale_max": 4.0,
-                    "end_scale": 0.0
-                }
-            }
-        }
-    ]
+	"actors": [
+		{
+			"name": "camera",
+			"components": {
+				"1": {
+					"type": "CameraManager"
+				}
+			}
+		},
+		{
+			"name": "GameManager",
+			"components": {
+				"1": {
+					"type": "GameManager"
+				}
+			}
+		},
+		{
+			"name": "HUD",
+			"components": {
+				"1": { 
+					"type": "Hud"
+				}
+			}
+		}
+	]
 }
