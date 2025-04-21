@@ -1,1 +1,1 @@
-# EECS 498 Data Oriented Design by Stanley Zhang <stanleyz@umich.edu>
+# EECS 498 "EchoPad" Game Architecture designed by Stanley Zhang <stanleyz@umich.edu>
